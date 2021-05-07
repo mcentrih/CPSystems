@@ -1,5 +1,6 @@
 <?php
 include_once('header.php');
+include("nav.php");
 
 function check_credentials($username, $password)
 {
@@ -28,15 +29,17 @@ if (isset($_POST["poslji"])) {
     }
 }
 ?>
-    <div style="border: 5px solid black; background-color: lightgray; width: 50%; margin: 0 auto;">
-        <h2 style="text-align: center;">Login</h2>
-        <form style="padding-left: 42%;" action="login.php" method="POST">
-            <p>Username: </p><input type="text" name="user"/>
-            <p>Password: </p><input type="password" name="pass"/><br><br>
-            <input type="submit" name="poslji" value="Prijava" style="width: 100px; height: 30px; margin-left: 30px;"/>
-        </form>
+    <div style="height:60%; margin-bottom: 20px;">
+        <div style="border: 5px solid black; background-color: #21364c; width: 50%; margin: 0 auto;padding-top: 30px; padding-bottom: 20px "
+             class="form-group">
+            <h2 style="text-align: center;">Prijavno okno</h2>
+            <form style="padding-left: 38%;" action="login.php" method="POST">
+                <p>Uporabniško ime: </p><input class="form-control" style="width: 250px" type="text" name="user"/>
+                <p>Geslo: </p><input class="form-control" style="width: 250px" type="password" name="pass"/><br><br>
+                <input type="submit" class="btn btn-success" name="poslji" value="Prijava" style="margin-left: 80px">
+            </form>
+        </div>
     </div>
-
 <?php
 include_once('footer.php');
 ?>
