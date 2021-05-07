@@ -1,23 +1,27 @@
 <?php
-    session_start();
-    //Seja poteče po 30 minutah - avtomatsko odjavi neaktivnega uporabnika
-    if (isset($_SESSION['LAST_ACTIVITY']) && time() - $_SESSION['LAST_ACTIVITY'] < 1800) {
-        session_regenerate_id(true);
-    }
-    $_SESSION['LAST_ACTIVITY'] = time();
+session_start();
+//Seja poteče po 30 minutah - avtomatsko odjavi neaktivnega uporabnika
+if (isset($_SESSION['LAST_ACTIVITY']) && time() - $_SESSION['LAST_ACTIVITY'] < 1800) {
+    session_regenerate_id(true);
+}
+$_SESSION['LAST_ACTIVITY'] = time();
 
-    //Poveži se z bazo
-    $conn = new mysqli('localhost', 'root', '', 'projekt');
-    //Nastavi kodiranje znakov, ki se uporablja pri komunikaciji z bazo
-    $conn->set_charset("UTF8");
+//Poveži se z bazo
+$conn = new mysqli('localhost', 'root', '', 'projekt');
+//Nastavi kodiranje znakov, ki se uporablja pri komunikaciji z bazo
+$conn->set_charset("UTF8");
+
 ?>
 <html>
 <head>
     <title>Projekt CPSystems</title>
+    <link rel="icon" href="icon.png">
 </head>
 <body style="background-color: gray; margin-top: 0">
 <div style="background-color: lightgray; padding: 0 10px 30px; border: 1px solid black; border-bottom: 5px solid black; margin-bottom: 10px">
-    <h1 style="text-align: center" ">Projekt prepoznava tablic in cestišča</h1>
+    <img style="display: block; margin-left: auto; margin-right: auto;padding-top: 5px;" src="icon.png" width="128"
+         height="128">
+    <h1 style="text-align: center">Projekt prepoznava tablic in cestišča</h1>
     <nav style="text-align: center">
         <ul>
             <li style="display: inline; float: left"><a href="index.php">Domov</a></li>
@@ -25,6 +29,8 @@
             //spreminjanje menija ce si prijavljen ali ne
             if (isset($_SESSION["USER_ID"])) {
                 ?>
+                <li style="list-style-type: none; text-align: center;"><p>Pozdravljen,
+                        <strong><?php echo $_SESSION["imeInPriimek"] ?></strong></p></li>
                 <li style="display: inline; float: right; padding-right: 10px"><a href="logout.php">Odjava</a></li>
                 <?php
             } else {
