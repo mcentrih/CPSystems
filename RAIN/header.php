@@ -36,7 +36,7 @@ if (isset($_SESSION["USER_ID"])) {
              height="128">
         <h1 style="text-align: center">Projekt prepoznava tablic in cestišča</h1>
         <div style="display: inline-block; padding-left: 45%">
-            <p>Pozdravljen, <strong><?php echo $_SESSION["imeInPriimek"] ?></strong></p>
+            <p>Pozdravljeni, <strong><?php echo $_SESSION["imeInPriimek"] ?></strong></p>
         </div>
     </div>
     <?php

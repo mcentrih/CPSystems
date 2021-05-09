@@ -36,8 +36,11 @@
                     <?php
                 } else {
                     ?>
-                    <li class="" style="padding-left: 290%">
+                    <li class="" style="padding-left: 210%">
                         <a role="button" class="btn btn-primary" href="login.php">Prijava</a>
+                    </li>
+                    <li class="" style="padding-left: 10%">
+                        <a role="button" class="btn btn-success" href="register.php">Registracija</a>
                     </li>
                     <?php
                 }
