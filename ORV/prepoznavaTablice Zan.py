@@ -1,8 +1,9 @@
-#!C:\Users\Matjaz CENTRIH\AppData\Local\Programs\Python\Python39\python.exe
+#!C:\Python\Python39\python.exe
 print("Content-type: text/html\n\n")
 
 import sys
-import cv2
+#import cv2
+from cv2 import cv2
 import numpy as np
 import os
 import logging
@@ -56,7 +57,7 @@ cropped_image = gray[x1:x2+1, y1:y2+1]
 #reader = easyocr.Reader(['en', 'sl'])
 #result = reader.readtext(cropped_image)
 cv2.imwrite("tablica.jpg", cropped_image)
-pytesseract.pytesseract.tesseract_cmd = r'C:\Users\Matjaz CENTRIH\AppData\Local\Programs\Tesseract-OCR\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 text = pytesseract.image_to_string(cropped_image)
 a = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 filterd = list(filter(lambda x : x in a,text))
