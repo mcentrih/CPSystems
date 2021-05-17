@@ -1,17 +1,11 @@
 <?php
-if(isset($_POST['email']) && isset($_POST['password'])){
-    require_once "conn.php";
-    require_once "validate.php";
-
-    $email = validate($_POST['email']);
-    $password = validate($_POST['password']);
-    $sql = "select * from users where email='$email' and password='". md5($password) ."'";
-    $result = $conn->query($sql);
-    if($result->num_rows > 0){
-        echo "Login sucessfull!";
-    }
-    else {
-        echo "Login failed!";
-    }
-}
+require "DataBase.php";
+$db = new DataBase();
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    if ($db->dbConnect()) {
+        if ($db->logIn("users", $_POST['username'], $_POST['password'])) {
+            echo "Login Success";
+        } else echo "Username or Password wrong";
+    } else echo "Error: Database connection";
+} else echo "All fields are required";
 ?>
