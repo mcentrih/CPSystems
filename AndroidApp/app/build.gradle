@@ -43,4 +43,5 @@ dependencies {
     implementation "androidx.fragment:fragment:$fragment_version"
     debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation 'com.android.volley:volley:1.1.1'
 }
