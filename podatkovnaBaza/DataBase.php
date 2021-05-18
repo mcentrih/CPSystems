@@ -32,7 +32,6 @@ class DataBase
     function prepareData($data)
     {
         return mysqli_real_escape_string($this->connect, stripslashes(htmlspecialchars($data)));
-        //odstrani posebne znake in poševnice(proti vdorom)
     }
 
     function logIn($table, $username, $password)
@@ -53,15 +52,15 @@ class DataBase
         return $login;
     }
 
-    function signUp($table, $username, $password, $name, $mail)
+    function signUp($table, $fullname, $email, $username, $password)
     {
-        $name = $this->prepareData($name);
+        $fullname = $this->prepareData($fullname);
         $username = $this->prepareData($username);
         $password = $this->prepareData($password);
-        $mail = $this->prepareData($mail);
+        $email = $this->prepareData($email);
         $password = password_hash($password, PASSWORD_DEFAULT);
         $this->sql =
-            "INSERT INTO " . $table . " (username, password, imeInPriimek, mail) VALUES ('" . $username . "','" . $password . "','" . $name . "','" . $mail . "')";
+            "INSERT INTO " . $table . " (fullname, username, password, email) VALUES ('" . $fullname . "','" . $username . "','" . $password . "','" . $email . "')";
         if (mysqli_query($this->connect, $this->sql)) {
             return true;
         } else return false;
