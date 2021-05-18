@@ -15,8 +15,6 @@ import android.widget.Toast;
 
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
-import org.w3c.dom.Text;
-
 public class ActivityLogin extends AppCompatActivity {
     String URLRegister = "http://localhost/CPSystems/podatkovnaBaza/login.php";
     //String URLRegister = "http://192.168.1.10/CPSystems/podatkovnaBaza/login.php";
@@ -45,28 +43,26 @@ public class ActivityLogin extends AppCompatActivity {
 
 
                 if (!username.equals("") && !password.equals("")) {
-                    //Start ProgressBar first (Set visibility VISIBLE)
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            //Starting Write and Read data with URL
-                            //Creating array for parameters
+                            //DATABASE FIELDS
                             String[] field = new String[2];
                             field[0] = "username";
                             field[1] = "password";
-                            //Creating array for data
+                            //DATA ARRAY
                             String[] data = new String[2];
                             data[0] = username;
                             data[1] = password;
-                            PutData putData = new PutData("http://192.168.1.10/CPSystems/podatkovnaBaza/login.php", "POST", field, data);
+                            PutData putData = new PutData("http://192.168.1.10/CPSystems/podatkovnaBaza/login.php", "POST", field, data);  //POST to database
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
                                     Log.i("PutData", result);
                                     if (result.equals("Login Success")) {
                                         Toast.makeText(ActivityLogin.this, "Registration successfull!", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(getApplicationContext(), ActivityTrack.class);
+                                        Intent i = new Intent(getApplicationContext(), ActivityMenu.class);
                                         startActivity(i);
                                         finish();
                                     } else {
@@ -74,7 +70,6 @@ public class ActivityLogin extends AppCompatActivity {
                                     }
                                 }
                             }
-                            //End Write and Read data with URL
                         }
                     });
                 } else {
@@ -90,7 +85,7 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     public void onClickOpentrack(View view) {
-        Intent i = new Intent(getBaseContext(), ActivityTrack.class);
+        Intent i = new Intent(getBaseContext(), ActivityMenu.class);
         startActivity(i);
     }
 }
