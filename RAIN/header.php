@@ -7,7 +7,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && time() - $_SESSION['LAST_ACTIVITY'] < 1
 $_SESSION['LAST_ACTIVITY'] = time();
 
 //Poveži se z bazo
-$conn = new mysqli('localhost', 'root', '', 'projekt');
+$conn = new mysqli('localhost', 'root', '', 'projektdb');
 //Nastavi kodiranje znakov, ki se uporablja pri komunikaciji z bazo
 $conn->set_charset("UTF8");
 
@@ -36,7 +36,7 @@ if (isset($_SESSION["USER_ID"])) {
              height="128">
         <h1 style="text-align: center">Projekt prepoznava tablic in cestišča</h1>
         <div style="display: inline-block; padding-left: 45%">
-            <p>Pozdravljeni, <strong><?php echo $_SESSION["imeInPriimek"] ?></strong></p>
+            <p>Pozdravljeni, <strong><?php echo $_SESSION["fullname"] ?></strong></p>
         </div>
     </div>
     <?php

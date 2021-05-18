@@ -3,7 +3,7 @@ include_once('header.php');
 include("nav.php");
 $username = NULL;
 $password = NULL;
-$mail = NULL;
+$email = NULL;
 $imeInPriiemk = NULL;
 
 //metoda ki preveri ce username ze obstaja
@@ -22,10 +22,10 @@ function register($usern, $pass)
     global $conn;
     $username = mysqli_real_escape_string($conn, $usern);
     $password = sha1($pass);        //$_POST["registracijaGeslo"];
-    $mail = $_POST["regMail"];
-    $imeInPriimek = $_POST["regName"];
+    $email = $_POST["regMail"];
+    $fullname = $_POST["regName"];
 
-    $query = "INSERT INTO users VALUES(NULL,'$username', '$password', '$imeInPriimek', '$mail')";
+    $query = "INSERT INTO users VALUES(NULL,'$fullname', '$username', '$password', '$email')";
     if ($conn->query($query)) {
         return true;
     } else {

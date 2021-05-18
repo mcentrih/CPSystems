@@ -10,7 +10,7 @@ function check_credentials($username, $password)
     $query = "SELECT * FROM users  WHERE username='$username' AND password='$pass'";
     $res = $conn->query($query);
     if ($user_obj = $res->fetch_object()) {
-        $_SESSION["imeInPriimek"] = $user_obj->imeInPriimek;
+        $_SESSION["fullname"] = $user_obj->fullname;
         return $user_obj->id;
     }
     return -1;
