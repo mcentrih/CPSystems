@@ -21,7 +21,7 @@ function register($usern, $pass)
 {
     global $conn;
     $username = mysqli_real_escape_string($conn, $usern);
-    $password = password_hash($pass);        //$_POST["registracijaGeslo"];
+    $password = password_hash($pass, PASSWORD_DEFAULT);        //$_POST["registracijaGeslo"];
     $email = $_POST["regMail"];
     $fullname = $_POST["regName"];
 
