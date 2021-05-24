@@ -55,7 +55,7 @@ public class ActivityLogin extends AppCompatActivity {
                             String[] data = new String[2];
                             data[0] = username;
                             data[1] = password;
-                            PutData putData = new PutData("http://192.168.1.10/CPSystems/podatkovnaBaza/login.php", "POST", field, data);  //POST to database
+                            PutData putData = new PutData("http://164.8.162.27/CPSystems/podatkovnaBaza/login.php", "POST", field, data);  //POST to database
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
