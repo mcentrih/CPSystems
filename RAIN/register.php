@@ -4,7 +4,7 @@ include("nav.php");
 $username = NULL;
 $password = NULL;
 $email = NULL;
-$imeInPriiemk = NULL;
+$fullname = NULL;
 
 //metoda ki preveri ce username ze obstaja
 function check_username($username)
@@ -21,7 +21,7 @@ function register($usern, $pass)
 {
     global $conn;
     $username = mysqli_real_escape_string($conn, $usern);
-    $password = sha1($pass);        //$_POST["registracijaGeslo"];
+    $password = password_hash($pass);        //$_POST["registracijaGeslo"];
     $email = $_POST["regMail"];
     $fullname = $_POST["regName"];
 

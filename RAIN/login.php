@@ -6,7 +6,7 @@ function check_credentials($username, $password)
 {
     global $conn;
     $username = mysqli_real_escape_string($conn, $username);
-    $pass = sha1($password); //uporabi ce dodaš kodiranje
+    $pass = password_hash($password); //uporabi ce dodaš kodiranje
     $query = "SELECT * FROM users  WHERE username='$username' AND password='$pass'";
     $res = $conn->query($query);
     if ($user_obj = $res->fetch_object()) {
