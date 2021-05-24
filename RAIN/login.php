@@ -6,12 +6,22 @@ function check_credentials($username, $password)
 {
     global $conn;
     $username = mysqli_real_escape_string($conn, $username);
-    $pass = password_hash($password, PASSWORD_DEFAULT); //uporabi ce dodaš kodiranje
-    $query = "SELECT * FROM users  WHERE username='$username' AND password='$pass'";
-    $res = $conn->query($query);
-    if ($user_obj = $res->fetch_object()) {
-        $_SESSION["fullname"] = $user_obj->fullname;
-        return $user_obj->id;
+
+    $query1 = "SELECT * FROM users WHERE username='$username'";
+    $res1 = $conn->query($query1);
+
+    $pass = password_verify($password, $res1->fetch_object()->password); //uporabi ce dodaš kodiranje
+
+//    $query = "SELECT * FROM users WHERE username='$username' AND password='$pass'";
+//    $res = $conn->query($query);
+    echo $pass;
+    if ($pass == 1) {
+        $query = "SELECT * FROM users WHERE username='$username'";
+        $res = $conn->query($query);
+        if ($user_obj = $res->fetch_object()) {
+            $_SESSION["fullname"] = $user_obj->fullname;
+            return $user_obj->id;
+        }
     }
     return -1;
 }
@@ -29,7 +39,7 @@ if (isset($_POST["poslji"])) {
     }
 }
 ?>
-    <div  style="height:60%; margin-bottom: 20px; overflow-y: scroll;">
+    <div style="height:60%; margin-bottom: 20px; overflow-y: scroll;">
         <div style="border: 5px solid black; background-color: #21364c; width: 50%; margin: 0 auto;padding-top: 30px; padding-bottom: 20px "
              class="form-group">
             <h2 style="text-align: center;">Prijavno okno</h2>
