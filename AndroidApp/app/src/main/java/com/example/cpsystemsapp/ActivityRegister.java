@@ -63,7 +63,7 @@ public class ActivityRegister extends AppCompatActivity {
                                 data[1] = username;
                                 data[2] = password;
                                 data[3] = mail;
-                                PutData putData = new PutData("http://164.8.162.27/CPSystems/podatkovnaBaza/signup.php", "POST", field, data);  //POST to database
+                                PutData putData = new PutData("http://192.168.56.1/CPSystems/podatkovnaBaza/signup.php", "POST", field, data);  //POST to database
                                 if (putData.startPut()) {
                                     if (putData.onComplete()) {
                                         String result = putData.getResult();

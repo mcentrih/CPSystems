@@ -17,7 +17,7 @@ import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 public class ActivityLogin extends AppCompatActivity {
     String URLRegister = "http://localhost/CPSystems/podatkovnaBaza/login.php";
-    //String URLRegister = "http://192.168.1.10/CPSystems/podatkovnaBaza/login.php";
+    //String URLRegister = "http://192.168.1.56/CPSystems/podatkovnaBaza/login.php";
 
     TextView notRegistered;
     Button btn_login;
@@ -55,18 +55,18 @@ public class ActivityLogin extends AppCompatActivity {
                             String[] data = new String[2];
                             data[0] = username;
                             data[1] = password;
-                            PutData putData = new PutData("http://164.8.162.27/CPSystems/podatkovnaBaza/login.php", "POST", field, data);  //POST to database
+                            PutData putData = new PutData("http://192.168.56.1/CPSystems/podatkovnaBaza/login.php", "POST", field, data);  //POST to database
                             if (putData.startPut()) {
                                 if (putData.onComplete()) {
                                     String result = putData.getResult();
                                     Log.i("PutData", result);
                                     if (result.equals("Login Success")) {
-                                        Toast.makeText(ActivityLogin.this, "Registration successfull!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ActivityLogin.this, "Login successfull!", Toast.LENGTH_SHORT).show();
                                         Intent i = new Intent(getApplicationContext(), ActivityMenu.class);
                                         startActivity(i);
                                         finish();
                                     } else {
-                                        Toast.makeText(ActivityLogin.this, "Registration failed!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ActivityLogin.this, "Login failed!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
