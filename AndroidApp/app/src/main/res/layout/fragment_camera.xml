@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_gravity="center_horizontal">
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/imageViewCamera"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:src="@drawable/ic_baseline_image_24"
+        />
+
+    <ImageButton
+        android:id="@+id/buttonCapture"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_custom"
+        android:onClick="onClickCapture"
+        android:src="@drawable/ic_baseline_photo_camera_24" />
+
+    <ImageButton
+        android:id="@+id/buttonSend"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_custom"
+        android:onClick="onClickSend"
+        android:src="@drawable/ic_baseline_send_24" />
+
+</LinearLayout>
