@@ -1,5 +1,5 @@
 #!C:\Python\Python39\python.exe
-print("Content-type: text/html\n\n")
+#print("Content-type: text/html\n\n")
 
 import sys
 #import cv2
