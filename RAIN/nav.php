@@ -11,10 +11,10 @@
                     <a class="nav-link active" aria-current="page" href="index.php">Domov</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Infrastruktura</a>
+                    <a class="nav-link" href="getTablica.php">Tablice</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Tablice</a>
+                    <a class="nav-link" href="povezave.php">Povezave</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"

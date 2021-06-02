@@ -1,22 +1,34 @@
-<div id="demoMap" style="height:400px; width: 400px;"></div>
+<div id="demoMap" style="height:400px; width: 800px; display: inline-block; float: left; padding-right: 100px;"></div>
 <script src="OpenLayers.js"></script>
 <script>
-    map = new OpenLayers.Map("demoMap");
+
     mapnik = new OpenLayers.Layer.OSM();
     fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
     toProjection = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
     position = new OpenLayers.LonLat(15.3527785, 46.167495).transform(fromProjection, toProjection);
     zoom = 10;
-
-    markers = new OpenLayers.Layer.Markers( "Markers" );
-    map.addLayer(markers);
-
     size = new OpenLayers.Size(21,25);
     offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
     icon = new OpenLayers.Icon("here.png", size, offset);
-    markers.addMarker(new OpenLayers.Marker(position,icon));
 
-    map.addLayer(mapnik);
-    map.setCenter(position, zoom);
+    function init() {
+        map = new OpenLayers.Map("demoMap");
+        markers = new OpenLayers.Layer.Markers( "Markers" );
+        map.addLayer(markers);
+        // testniMarker(25.3527785 ,10.167495)
+        map.addLayer(mapnik);
+        map.setCenter(position, zoom, map);
+    }
+
+
+    function testniMarker(lng, lat){
+        let position = new OpenLayers.LonLat(lng, lat).transform(fromProjection, toProjection);
+        let size = new OpenLayers.Size(21,25);
+        let offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+        let icon = new OpenLayers.Icon("here.png", size, offset);
+        markers.addMarker(new OpenLayers.Marker(position,icon));
+    }
+
+    // init();
 </script>
 </div>
