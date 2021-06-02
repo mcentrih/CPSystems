@@ -35,7 +35,7 @@ import java.util.Objects;
 
 public class ActivityMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int PERMISSION_CODE = 1000;
-    private static final int IMAGE_CAPTURE_CODE = 1888;
+    private static final int IMAGE_CAPTURE_CODE = 1001;
     private static final int IMAGE_SELECT_CODE = 1002;
 
     private DrawerLayout drawer;
@@ -67,6 +67,15 @@ public class ActivityMenu extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentCamera()).commit();
             navigationView.setCheckedItem(R.id.nav_camera);
+        }
+
+        //for SKD older than 23
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED &&
+                    checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+                requestPermissions(permission, PERMISSION_CODE);
+            }
         }
 
     }
@@ -104,6 +113,7 @@ public class ActivityMenu extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /*
     public void onClickCapture(View view) {
         //for SKD older than 23
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -120,7 +130,9 @@ public class ActivityMenu extends AppCompatActivity implements NavigationView.On
             openCamera();
         }
     }
+     */
 
+    /*
     private void openCamera() {
         //Image information
         Long timeStamp = System.currentTimeMillis() / 1000;
@@ -140,7 +152,9 @@ public class ActivityMenu extends AppCompatActivity implements NavigationView.On
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE); //-> 'startActivityForResult(android.content.Intent, int)' is deprecated
 
     }
+    */
 
+    /*
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -156,7 +170,9 @@ public class ActivityMenu extends AppCompatActivity implements NavigationView.On
             }
         }
     }
+    */
 
+    /*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -168,7 +184,10 @@ public class ActivityMenu extends AppCompatActivity implements NavigationView.On
             String test = data.getStringExtra(MediaStore.EXTRA_OUTPUT);
             Log.i("imageURI: ", "" + test);
             imageView.setImageURI(imageUri); //->Attempt to invoke virtual method 'void android.widget.ImageView.setImageURI(android.net.Uri)' on a null object reference
+
+            //PRESTAVLJENO V FRAGMENT!
         }
     }
+    */
 
 }
