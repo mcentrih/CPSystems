@@ -21,20 +21,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="20dp"
-        android:onClick="onClickCapture"
         android:background="@drawable/btn_custom"
         android:src="@drawable/ic_baseline_photo_camera_24" />
-
-    <ImageButton
-        android:id="@+id/buttonSend"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/btn_custom"
-        android:onClick="onClickTest"
-        android:src="@drawable/ic_baseline_send_24" />
 
     <ImageButton
         android:id="@+id/buttonSearchPic"
@@ -45,5 +33,16 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/btn_custom"
         android:src="@drawable/ic_baseline_image_search_24" />
+
+    <ImageButton
+        android:id="@+id/buttonSend"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_custom"
+        android:src="@drawable/ic_baseline_send_24" />
+
 
 </LinearLayout>
