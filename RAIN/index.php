@@ -6,17 +6,15 @@ include("nav.php");
 //echo $output;
 
 ?>
-<div style="overflow-y: scroll; height:58%; margin-bottom: 20px;">
-    <?php
-    $command = escapeshellcmd('C:\wamp64\www\CPSystems\ORV\prepoznavaTabliceMatjaz.py C:\wamp64\www\CPSystems\ORV\passat.jpg');
-    $output = shell_exec($command);
-    echo $output;
-    echo "<br>";
-    include("scraper.php");
-
-    ?>
-</div>
-
+    <div style="overflow-y: scroll; height:58%; margin-bottom: 20px;">
+        <?php
+        $command = escapeshellcmd('C:\wamp64\www\CPSystems\ORV\prepoznavaTabliceMatjaz.py C:\wamp64\www\CPSystems\ORV\passat.jpg');
+        $output = shell_exec($command);
+        echo $output;
+        echo "<br>";
+        echo "<br>";
+        include("showMap.php");
+        ?>
 <?php
 include("footer.php");
 ?>

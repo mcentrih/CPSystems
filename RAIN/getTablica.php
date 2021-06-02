@@ -1,9 +1,16 @@
 <?php
+include_once('header.php');
+include("nav.php");
+global $conn;
+$sql = "select name from tablice";
+$result = mysqli_query($conn, $sql);
 
-$sql = "select image from images where id=1";
-$result = mysqli_query($con,$sql);
-$row = mysqli_fetch_array($result);
+while ($row = $result->fetch_assoc()) {
+    $image = $row['name'];
+    $image_src = "upload/" . $image;
 
-$image_src2 = $row['image'];
-
+    ?>
+    <img src='<?php echo $image_src; ?>'>
+    <?php
+}
 ?>

@@ -1,29 +1,41 @@
 <?php
-if(isset($_POST['but_upload'])){
+include_once('header.php');
+include("nav.php");
+global $conn;
 
-  $name = $_FILES['file']['name'];
-  $target_dir = "upload/";
-  $target_file = $target_dir . basename($_FILES["file"]["name"]);
+$result = $conn->query("SELECT max(id) as 'id' FROM tablice");
 
-  // Select file type
-  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+if (!$result) {
+    die('Could not query:' . mysqli_error($conn));
+}
 
-  // Valid file extensions
-  $extensions_arr = array("jpg","jpeg","png");
+$row = mysqli_fetch_array($result);
+$id = $row['id'];
 
-  // Check extension
-  if( in_array($imageFileType,$extensions_arr) ){
-    // Upload file
-    if(move_uploaded_file($_FILES['file']['tmp_name'],$target_dir.$name)){
-       // Convert to base64
-       $image_base64 = base64_encode(file_get_contents($_FILES['file']['tmp_name']) );
-       $image = 'data:image/'.$imageFileType.';base64,'.$image_base64;
-       // Insert record
-       $query = "insert into images(image) values('".$image."')";
-       mysqli_query($con,$query);
+if($id == "")
+    $id = 0;
+
+echo $id;
+$tar_id = $id+1;
+
+$name = "tablica";
+$end = ".jpg";
+$target_dir = "upload/";
+$target_file = $target_dir . $name . strval($tar_id) . $end;
+$tar = $name . strval($tar_id) . $end;
+echo $tar_id;
+
+echo "tu";
+
+// Upload file
+if (rename($name . $end, $target_file)) {
+    // Insert record
+    $query = "insert into tablice(name) values('" . $tar . "')";
+    if ($conn->query($query)) {
+        echo "dela";
+    } else {
+        echo "ne dela!";
+        echo mysqli_error($conn);
     }
-
-  }
-
 }
 ?>
