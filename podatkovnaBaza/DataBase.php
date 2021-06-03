@@ -62,6 +62,21 @@ class DataBase
         $this->sql =
             "INSERT INTO " . $table . " (fullname, username, password, email) VALUES ('" . $fullname . "','" . $username . "','" . $password . "','" . $email . "')";
         if (mysqli_query($this->connect, $this->sql)) {
+            return true; 
+        } else return false;
+    }
+
+    function upload($table, $name, $image, $tablica, $lat, $lng/*, $FK_user*/)
+    {
+        $name = $this->prepareData($name);
+        $image = $this->prepareData($image);
+        $tablica = $this->prepareData($tablica);
+        $lat = $this->prepareData($lat);
+        $lng = $this->prepareData($lng);
+        /*$FK_user = $this->prepareData($FK_user);*/
+        $this->sql =
+            "INSERT INTO " . $table . " (name, image, tablica, lat, lng) VALUES ('" . $name. "','" . $image . "','" . $tablica . "','" . $lat . "','" . $lng . "')";
+        if(mysqli_query($this->connect, $this->sql)) {
             return true;
         } else return false;
     }
