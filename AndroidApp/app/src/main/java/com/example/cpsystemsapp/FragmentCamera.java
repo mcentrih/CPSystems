@@ -112,11 +112,10 @@ public class FragmentCamera extends Fragment {
             @Override
             public void onClick(View v) {
                 //Gallery intent
-                showFileChooser();
 
-                /*Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, IMAGE_SELECT_CODE);*/
+                startActivityForResult(galleryIntent, IMAGE_SELECT_CODE);
             }
         });
 
@@ -157,14 +156,16 @@ public class FragmentCamera extends Fragment {
             }
         }
         //display image from GALLERY
-        if (requestCode == IMAGE_SELECT_CODE && resultCode == ActivityMenu.RESULT_OK && data != null && data.getData() != null) {
-
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (requestCode == IMAGE_SELECT_CODE) {
+            if (resultCode == ActivityMenu.RESULT_OK) {
+                Uri galleryUri = data.getData();
+                //get image from gallery into imageView
+                try {
+                    Bitmap bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), galleryUri);
+                    imageView.setImageBitmap(bmp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         //send button

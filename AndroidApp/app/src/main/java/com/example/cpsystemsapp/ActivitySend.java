@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -39,14 +38,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
-
 public class ActivitySend extends AppCompatActivity {
     public static final String UPLOAD_URL = "http://192.168.1.10/CPSystems/podatkovnaBaza/upload.php";
-    public static final String UPLOAD_KEY = "image";
+    public static final String UPLOAD_KEY_IMAGE = "image";
+    public static final String UPLOAD_KEY_LATITUDE = "latitude";
+    public static final String UPLOAD_KEY_LONGITUDE = "longitude";
     private View view;
     private Bitmap bitmap;
-    private static final int PERMISSION_CODE = 9000;;
+    private static final int PERMISSION_CODE = 9000;
+    ;
     private static final int IMAGE_SELECT_CODE = 9002;
     private static final int IMAGE_SEND_CODE = 9003;
 
@@ -54,8 +54,6 @@ public class ActivitySend extends AppCompatActivity {
     ImageButton buttonSend, buttonSearchPic, buttonBack;
     Uri imageUri, filePath;
     String longitude, latitude;
-    String imagePath = "image_path";
-    String imageName = "image_name";
     boolean check = true;
 
     ProgressDialog progressDialog;
@@ -76,6 +74,7 @@ public class ActivitySend extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Gallery intent
+                getCurrentLocation();
                 showFileChooser();
 
                 /*Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -190,7 +189,7 @@ public class ActivitySend extends AppCompatActivity {
         class UploadImage extends AsyncTask<Bitmap, Void, String> {
 
             ProgressDialog loading;
-            RequestHandler rh = new RequestHandler();
+            RequestHandler requestHandler = new RequestHandler();
 
             @Override
             protected void onPreExecute() {
@@ -202,21 +201,28 @@ public class ActivitySend extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(getApplicationContext(), "Image uploaded!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Image uploaded!", Toast.LENGTH_LONG).show();
             }
 
             @Override
             protected String doInBackground(Bitmap... params) {
-                //latitude = String.valueOf(location.getLatitude());
-                //longitude = String.valueOf(location.getLongitude());
+
 
                 Bitmap bitmap = params[0];
                 String uploadImage = getStringImage(bitmap);
 
                 HashMap<String, String> data = new HashMap<>();
-                data.put(UPLOAD_KEY, uploadImage);
+                data.put(UPLOAD_KEY_IMAGE, uploadImage);
+                data.put(UPLOAD_KEY_LATITUDE, latitude);
+                data.put(UPLOAD_KEY_LONGITUDE, longitude);
 
-                String result = rh.sendPostRequest(UPLOAD_URL, data);
+                /*
+                Log.i("BCKG-lat: ", latitude);
+                Log.i("BCKG-lng: ", longitude);
+                 */
+
+                String result = requestHandler.sendPostRequest(UPLOAD_URL, data);
 
                 return result;
             }
@@ -228,7 +234,7 @@ public class ActivitySend extends AppCompatActivity {
 
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
