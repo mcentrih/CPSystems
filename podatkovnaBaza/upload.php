@@ -8,7 +8,8 @@
     require_once('dbConnectImage.php');
     echo $image;
     
-    $sql = "INSERT INTO tablice VALUES (DEFAULT, 'defaultName' ,'$image', 'defaultTablica', '$latitude', '$longitude', '8')";
+    //get FK_user
+    $sql = "INSERT INTO tablice VALUES (DEFAULT, NULL ,'$image', NULL, '$latitude', '$longitude', '8')";
     if($con -> query($sql)){
         echo "Working!";
         return true;
