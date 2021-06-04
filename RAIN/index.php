@@ -2,6 +2,7 @@
 include("header.php");
 include("nav.php");
 include("showMap.php");
+include("pripraviImage.php");
 
 //$command = escapeshellcmd('C:\xampp\htdocs\CPSystems\ORV\prepoznavaTabliceMatjaz.py C:\xampp\htdocs\CPSystems\ORV\passat2.jpg');
 //$output = shell_exec($command);
@@ -15,7 +16,7 @@ if(array_key_exists('findT', $_POST)) {
 }
 function findTablica()
 {
-    $command = escapeshellcmd('C:\wamp64\www\CPSystems\ORV\prepoznavaTabliceMatjaz.py C:\wamp64\www\CPSystems\ORV\passat.jpg');
+    $command = escapeshellcmd('C:\wamp64\www\CPSystems\ORV\prepoznavaTabliceMatjaz.py C:\wamp64\www\CPSystems\RAIN\slika.jpg');
     $output = shell_exec($command);
     echo $output;
 }

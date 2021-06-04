@@ -25,6 +25,15 @@ $conn->set_charset("UTF8");
                 integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
                 crossorigin="anonymous"></script>
     </head>
+    <style>
+        .dot {
+            height: 15px;
+            width: 15px;
+            background-color: greenyellow;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
 <body style="background-color: #375a7f; color: white;">
 
 <?php

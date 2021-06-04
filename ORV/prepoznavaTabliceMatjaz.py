@@ -17,7 +17,7 @@ import pytesseract
 
 #filetypes = [("Slikovne datoteke", ".jpg .png .jpeg .jpe .tif .gif .jfif")]
 #filepath = filedialog.askopenfilename(title="Odpri sliko", filetypes=filetypes)
-img = cv2.imread("C:\wamp64\www\CPSystems\ORV\passat.jpg")
+img = cv2.imread(sys.argv[1])
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #cv2.imshow("siva", gray)
 #cv2.waitKey(0)

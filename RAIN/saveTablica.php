@@ -22,13 +22,16 @@ $tar_id = $id + 1;
 $name = "tablica";
 $end = ".jpg";
 $target_dir = "upload/";
-$target_file = $target_dir . $name . strval($tar_id) . $end;
-$tar = $name . strval($tar_id) . $end;
-echo $tar_id;
-echo "  ";
+$target_file = $target_dir . $name . strval($id) . $end;
+$tar = $name . strval($id) . $end;
+//echo $tar_id;
+//echo "  ";
 
 $lon = 46.5590392;
 $lat = 15.6358848;
+
+$img = file_get_contents($name . $end);
+$data = base64_encode($img);
 
 echo "tu";
 echo "  ";
@@ -36,7 +39,9 @@ echo "  ";
 // Upload file
 if (rename($name . $end, $target_file)) {
     // Insert record
-    $query = "insert into tablice(name, tablica, lat, lng, FK_user) values('" . $name . strval($tar_id) . "','" . $tar . "','" . $lat . "','" . $lon . "','" . $_SESSION["USER_ID"] . "')";
+//    $query = "insert into tablice(id, name, tablica/*, lat, lng, FK_user*/) values('".$id."','" . $tar . "','" . $data . "')";
+//    ,'" . $lat . "','" . $lon . "','" . $_SESSION["USER_ID"] . "')";
+    $query = "UPDATE tablice SET name = '" . $tar . "', tablica = '" . $data . "' WHERE id = '" . $id . "'";
     if ($conn->query($query)) {
         echo "dela";
         echo "  ";
@@ -49,6 +54,9 @@ if (rename($name . $end, $target_file)) {
     }
 }
 echo "<br>";
+if (file_exists("slika.jpg")) {
+    unlink("slika.jpg");
+}
 include("primaryBtns.php");
 
 include("footer.php");
