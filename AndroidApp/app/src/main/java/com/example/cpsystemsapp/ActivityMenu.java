@@ -1,10 +1,6 @@
 package com.example.cpsystemsapp;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,26 +8,17 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-
-import java.time.*;
-import java.util.Objects;
 
 public class ActivityMenu extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int PERMISSION_CODE = 1000;
@@ -96,6 +83,10 @@ public class ActivityMenu extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_car:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentCar()).commit();
+                break;
+            case R.id.nav_send:
+                Intent sendIntent = new Intent(getBaseContext(), ActivitySend.class);
+                startActivity(sendIntent);
                 break;
             case R.id.nav_settings:
                 Toast.makeText(this, "Settings!", Toast.LENGTH_SHORT).show();
