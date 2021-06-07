@@ -16,8 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityRegister extends AppCompatActivity {
-    //String URLRegister = "http://localhost/CPSystems/podatkovnaBaza/signup.php";
-    //String URLRegister = "http://192.168.1.10/CPSystems/podatkovnaBaza/signup.php";
+    String URLRegister = "http://192.168.56.1/CPSystems/podatkovnaBaza/signup.php";
 
     TextView alreadyRegistered;
     Button btn_register;
@@ -63,7 +62,7 @@ public class ActivityRegister extends AppCompatActivity {
                                 data[1] = username;
                                 data[2] = password;
                                 data[3] = mail;
-                                PutData putData = new PutData("http://192.168.56.1/CPSystems/podatkovnaBaza/signup.php", "POST", field, data);  //POST to database
+                                PutData putData = new PutData(URLRegister, "POST", field, data);  //POST to database
                                 if (putData.startPut()) {
                                     if (putData.onComplete()) {
                                         String result = putData.getResult();

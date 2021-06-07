@@ -9,7 +9,7 @@
     echo $image;
     
     //get FK_user
-    $sql = "INSERT INTO tablice VALUES (DEFAULT, NULL ,'$image', NULL, '$latitude', '$longitude', '8')";
+    $sql = "INSERT INTO tablice VALUES (DEFAULT, NULL ,'$image', NULL, '$latitude', '$longitude', '10')";
     if($con -> query($sql)){
         echo "Working!";
         return true;
