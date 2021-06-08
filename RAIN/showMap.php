@@ -37,7 +37,7 @@
         let icon = new OpenLayers.Icon("here.png", size, offset);
         popup = new OpenLayers.Popup("Prikaz",
             position,
-            new OpenLayers.Size(150,30),
+            new OpenLayers.Size(200,30),
             "RUKER",
             true);
 
