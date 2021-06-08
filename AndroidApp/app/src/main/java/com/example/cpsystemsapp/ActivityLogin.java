@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.vishnusivadas.advanced_httpurlconnection.PutData;
 
 public class ActivityLogin extends AppCompatActivity {
-    String URLLogin = "http://192.168.1.11/CPSystems/podatkovnaBaza/login.php";
+    String URLLogin = "http://192.168.3.117/CPSystems/podatkovnaBaza/login.php";
 
     TextView notRegistered;
     Button btn_login;
