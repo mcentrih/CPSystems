@@ -23,7 +23,9 @@ include("showMap.php");
     echo "<br>";
     echo "</div>";
     ?>
-
-    <?php
-    include("footer.php");
-    ?>
+    <div style="height:400px; width: 400px; display: inline-block; float: right;">
+<?php
+include("primaryBtns.php");
+echo "</div>";
+include("footer.php");
+?>
