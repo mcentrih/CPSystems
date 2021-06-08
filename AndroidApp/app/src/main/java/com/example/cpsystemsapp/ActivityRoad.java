@@ -26,11 +26,8 @@ import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class ActivityRoad extends AppCompatActivity {
+public class ActivityRoad extends AppCompatActivity implements SensorEventListener{
     public static final String UPLOAD_ROAD_URL = "http://192.168.1.11/CPSystems/podatkovnaBaza/uploadRoad.php";
     public static final String UPLOAD_KEY_IMAGE = "image";
     public static final String UPLOAD_KEY_LATITUDE = "latitude";
@@ -59,26 +56,34 @@ public class ActivityRoad extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
     Uri filePath;
     private Bitmap bitmap;
-    TextView twXaxis, twYaxis, twZaxis;
+    TextView twXAxis, twYAxis, twZAxis;
     EditText etDescription;
     ImageButton buttonBackRoad, buttonSendRoad, buttonImageRoad;
     String latitude, longitude, description;
-    float xAxis, yAxis, zAxis;
+    float mLastX, mLastY, mLastZ;
+    private boolean initialized;
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private final float NOISE = (float) 2.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_road);
 
-        TextView twXAxis = findViewById(R.id.twXaxis);
-        TextView twYAxis = findViewById(R.id.twYaxis);
-        TextView twZAxis = findViewById(R.id.twZaxis);
+        TextView twXAxis = findViewById(R.id.twXAxis);
+        TextView twYAxis = findViewById(R.id.twYAxis);
+        TextView twZAxis = findViewById(R.id.twZAxis);
         ImageButton buttonBackRoad = findViewById(R.id.buttonBackRoad);
         ImageButton buttonSendRoad = findViewById(R.id.buttonSendRoad);
         ImageButton buttonImageRoad = findViewById(R.id.buttonImageRoad);
         EditText etDescription = findViewById(R.id.etDescription);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        initialized = false;
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener((SensorEventListener) this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
 
         buttonBackRoad.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +126,57 @@ public class ActivityRoad extends AppCompatActivity {
             }
         }
         //send button
+    }
+
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        TextView twXAxis = findViewById(R.id.twXAxis);
+        TextView twYAxis = findViewById(R.id.twYAxis);
+        TextView twZAxis = findViewById(R.id.twZAxis);
+
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+        if (!initialized) {
+            mLastX = x;
+            mLastY = y;
+            mLastZ = z;
+            twXAxis.setText("0.0");
+            twYAxis.setText("0.0");
+            twZAxis.setText("0.0");
+            initialized = true;
+        } else {
+            float deltaX = Math.abs(mLastX - x);
+            float deltaY = Math.abs(mLastY - y);
+            float deltaZ = Math.abs(mLastZ - z);
+            if (deltaX < NOISE) deltaX = (float) 0.0;
+            if (deltaY < NOISE) deltaY = (float) 0.0;
+            if (deltaZ < NOISE) deltaZ = (float) 0.0;
+            mLastX = x;
+            mLastY = y;
+            mLastZ = z;
+            twXAxis.setText(Float.toString(deltaX));
+            twYAxis.setText(Float.toString(deltaY));
+            twZAxis.setText(Float.toString(deltaZ));
+
+            if(deltaY > 5.0) {
+                Toast.makeText(this, "BUMP", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        //not used
     }
 
     private void getCurrentLocation() {

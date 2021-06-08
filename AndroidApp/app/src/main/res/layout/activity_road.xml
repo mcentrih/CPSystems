@@ -43,7 +43,7 @@
         app:layout_constraintGuide_percent="0.70" />
 
     <TextView
-        android:id="@+id/twXaxis"
+        android:id="@+id/twXAxis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="X axis..."
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
     <TextView
-        android:id="@+id/twYaxis"
+        android:id="@+id/twYAxis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Y axis..."
@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline5" />
 
     <TextView
-        android:id="@+id/twZaxis"
+        android:id="@+id/twZAxis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Z axis..."
