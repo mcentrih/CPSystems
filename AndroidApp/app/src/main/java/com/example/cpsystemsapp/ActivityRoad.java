@@ -43,7 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class ActivityRoad extends AppCompatActivity implements SensorEventListener{
+public class ActivityRoad extends AppCompatActivity implements SensorEventListener {
     public static final String UPLOAD_ROAD_URL = "http://192.168.1.11/CPSystems/podatkovnaBaza/uploadRoad.php";
     public static final String UPLOAD_KEY_IMAGE = "image";
     public static final String UPLOAD_KEY_LATITUDE = "latitude";
@@ -65,6 +65,7 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor accelerometer;
     private final float NOISE = (float) 2.0;
+    String bump = "CPSystemApp detected BUMP!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,8 +169,52 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
             twYAxis.setText(Float.toString(deltaY));
             twZAxis.setText(Float.toString(deltaZ));
 
-            if(deltaY > 5.0) {
-                Toast.makeText(this, "BUMP", Toast.LENGTH_SHORT).show();
+            if (deltaY > 5.0) {
+                //Toast.makeText(this, "BUMP", Toast.LENGTH_SHORT).show();
+                class UploadRoadData extends AsyncTask<Bitmap, Void, String> {
+
+                    ProgressDialog loading;
+                    RequestHandler requestHandler = new RequestHandler();
+
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        loading = ProgressDialog.show(ActivityRoad.this, "BUMP", "Please wait...", true, true);
+                    }
+
+                    @Override
+                    protected void onPostExecute(String s) {
+                        super.onPostExecute(s);
+                        loading.dismiss();
+                        //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "BUMP!", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    protected String doInBackground(Bitmap... params) {
+
+                        Bitmap bitmap = params[0];
+                        String uploadImage = getStringImage(bitmap);
+
+                        HashMap<String, String> data = new HashMap<>();
+                        data.put(UPLOAD_KEY_IMAGE, uploadImage);
+                        data.put(UPLOAD_KEY_LATITUDE, latitude);
+                        data.put(UPLOAD_KEY_LONGITUDE, longitude);
+                        data.put(UPLOAD_KEY_DESCRIPTION, bump);
+
+                        /*
+                        Log.i("BCKG-lat: ", latitude);
+                        Log.i("BCKG-lng: ", longitude);
+                         */
+
+                        String result = requestHandler.sendPostRequest(UPLOAD_ROAD_URL, data);
+
+                        return result;
+                    }
+                }
+
+                UploadRoadData ui = new UploadRoadData();
+                ui.execute(bitmap);
             }
         }
     }
