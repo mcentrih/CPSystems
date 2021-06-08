@@ -16,6 +16,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="povezave.php">Povezave</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="cesta.php">Cesta</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
@@ -30,13 +33,13 @@
                 <?php
                 if (isset($_SESSION["USER_ID"])) {
                     ?>
-                    <li class="" style="padding-left: 290%">
+                    <li class="" style="padding-left: 260%">
                         <a role="button" class="btn btn-danger" href="logout.php">Odjava</a>
                     </li>
                     <?php
                 } else {
                     ?>
-                    <li class="" style="padding-left: 210%">
+                    <li class="" style="padding-left: 190%">
                         <a role="button" class="btn btn-primary" href="login.php">Prijava</a>
                     </li>
                     <li class="" style="padding-left: 10%">

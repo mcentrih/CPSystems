@@ -29,6 +29,25 @@
         markers.addMarker(new OpenLayers.Marker(position,icon));
     }
 
+    function cestaMarker(lng, lat, opis){
+        console.log(opis);
+        let position = new OpenLayers.LonLat(lng, lat).transform(fromProjection, toProjection);
+        let size = new OpenLayers.Size(21,25);
+        let offset = new OpenLayers.Pixel(-(size.w / 2), -size.h);
+        let icon = new OpenLayers.Icon("here.png", size, offset);
+        popup = new OpenLayers.Popup("Prikaz",
+            position,
+            new OpenLayers.Size(200,30),
+            "RUKER",
+            true);
+
+        let html = "<p style='color:black; font-size: 20px;'>" + opis;
+        popup.setContentHTML(html);
+        let marker = new OpenLayers.Marker(position,icon);
+        map.addPopup(popup);
+        markers.addMarker(marker);
+    }
+
     // init();
 </script>
 </div>
