@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityRegister extends AppCompatActivity {
-    String URLRegister = "http://192.168.3.117/CPSystems/podatkovnaBaza/signup.php";
+    String URLRegister = "http://192.168.1.11/CPSystems/podatkovnaBaza/signup.php";
 
     TextView alreadyRegistered;
     Button btn_register;

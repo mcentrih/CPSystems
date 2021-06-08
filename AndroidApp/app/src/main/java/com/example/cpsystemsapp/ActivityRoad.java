@@ -11,6 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -22,8 +26,12 @@ import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -38,66 +46,64 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class ActivitySend extends AppCompatActivity {
-    public static final String UPLOAD_URL = "http://192.168.1.11/CPSystems/podatkovnaBaza/upload.php";
+public class ActivityRoad extends AppCompatActivity {
+    public static final String UPLOAD_ROAD_URL = "http://192.168.1.11/CPSystems/podatkovnaBaza/uploadRoad.php";
     public static final String UPLOAD_KEY_IMAGE = "image";
     public static final String UPLOAD_KEY_LATITUDE = "latitude";
     public static final String UPLOAD_KEY_LONGITUDE = "longitude";
-    private View view;
-    private Bitmap bitmap;
-    private static final int PERMISSION_CODE = 9000;
-    ;
-    private static final int IMAGE_SELECT_CODE = 9002;
-    private static final int IMAGE_SEND_CODE = 9003;
-
-    ImageView imageView;
-    ImageButton buttonSend, buttonSearchPic, buttonBack;
-    Uri imageUri, filePath;
-    String longitude, latitude;
-    boolean check = true;
-
-    ProgressDialog progressDialog;
+    public static final String UPLOAD_KEY_DESCRIPTION = "opis";
+    public static final String UPLOAD_KEY_X = "xAxis";
+    public static final String UPLOAD_KEY_Y = "yAxis";
+    public static final String UPLOAD_KEY_Z = "zAxis";
+    private static final int IMAGE_SELECT_CODE = 5000;
     FusedLocationProviderClient fusedLocationProviderClient;
+    Uri filePath;
+    private Bitmap bitmap;
+    TextView twXaxis, twYaxis, twZaxis;
+    EditText etDescription;
+    ImageButton buttonBackRoad, buttonSendRoad, buttonImageRoad;
+    String latitude, longitude, description;
+    float xAxis, yAxis, zAxis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send);
+        setContentView(R.layout.activity_road);
 
-        imageView = findViewById(R.id.imageView);
-        buttonSend = findViewById(R.id.buttonSend);
-        buttonSearchPic = findViewById(R.id.buttonSearchPic);
-        buttonBack = findViewById(R.id.buttonBack);
+        TextView twXAxis = findViewById(R.id.twXaxis);
+        TextView twYAxis = findViewById(R.id.twYaxis);
+        TextView twZAxis = findViewById(R.id.twZaxis);
+        ImageButton buttonBackRoad = findViewById(R.id.buttonBackRoad);
+        ImageButton buttonSendRoad = findViewById(R.id.buttonSendRoad);
+        ImageButton buttonImageRoad = findViewById(R.id.buttonImageRoad);
+        EditText etDescription = findViewById(R.id.etDescription);
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        buttonSearchPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Gallery intent
-                getCurrentLocation();
-                showFileChooser();
 
-                /*Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                galleryIntent.setType("image/*");
-                startActivityForResult(galleryIntent, IMAGE_SELECT_CODE);*/
-            }
-        });
-
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Send button listener
-                uploadImage();
-
-            }
-        });
-
-        buttonBack.setOnClickListener(new View.OnClickListener() {
+        buttonBackRoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+
+        buttonSendRoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                description = etDescription.getText().toString();
+                uploadRoadData();
+            }
+        });
+
+        buttonImageRoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCurrentLocation();
+                showFileChooser();
+            }
+        });
+
     }
 
     @Override
@@ -109,7 +115,7 @@ public class ActivitySend extends AppCompatActivity {
             filePath = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
+                //imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -119,14 +125,14 @@ public class ActivitySend extends AppCompatActivity {
 
     private void getCurrentLocation() {
         //Initialize locationManager
-        LocationManager locationManager = (LocationManager) ActivitySend.this.getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) ActivityRoad.this.getSystemService(Context.LOCATION_SERVICE);
 
         //check for provider
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             //when location service enabled
             //get last location
-            if (ActivityCompat.checkSelfPermission(ActivitySend.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(ActivitySend.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(ActivityRoad.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(ActivityRoad.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
             fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -163,8 +169,8 @@ public class ActivitySend extends AppCompatActivity {
                             }
                         };
                         //request location updates
-                        if (ActivityCompat.checkSelfPermission(ActivitySend.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                                ActivityCompat.checkSelfPermission(ActivitySend.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ActivityCompat.checkSelfPermission(ActivityRoad.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                                ActivityCompat.checkSelfPermission(ActivityRoad.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                             return;
                         }
                         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
@@ -178,15 +184,8 @@ public class ActivitySend extends AppCompatActivity {
         }
     }
 
-    private void showFileChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_SELECT_CODE);
-    }
-
-    private void uploadImage() {
-        class UploadImage extends AsyncTask<Bitmap, Void, String> {
+    private void uploadRoadData() {
+        class UploadRoadData extends AsyncTask<Bitmap, Void, String> {
 
             ProgressDialog loading;
             RequestHandler requestHandler = new RequestHandler();
@@ -194,7 +193,7 @@ public class ActivitySend extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(ActivitySend.this, "Uploading Image", "Please wait...", true, true);
+                loading = ProgressDialog.show(ActivityRoad.this, "Uploading event", "Please wait...", true, true);
             }
 
             @Override
@@ -202,7 +201,7 @@ public class ActivitySend extends AppCompatActivity {
                 super.onPostExecute(s);
                 loading.dismiss();
                 //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), "Image uploaded!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Event uploaded!", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -216,19 +215,20 @@ public class ActivitySend extends AppCompatActivity {
                 data.put(UPLOAD_KEY_IMAGE, uploadImage);
                 data.put(UPLOAD_KEY_LATITUDE, latitude);
                 data.put(UPLOAD_KEY_LONGITUDE, longitude);
+                data.put(UPLOAD_KEY_DESCRIPTION, description);
 
                 /*
                 Log.i("BCKG-lat: ", latitude);
                 Log.i("BCKG-lng: ", longitude);
                  */
 
-                String result = requestHandler.sendPostRequest(UPLOAD_URL, data);
+                String result = requestHandler.sendPostRequest(UPLOAD_ROAD_URL, data);
 
                 return result;
             }
         }
 
-        UploadImage ui = new UploadImage();
+        UploadRoadData ui = new UploadRoadData();
         ui.execute(bitmap);
     }
 
@@ -239,4 +239,12 @@ public class ActivitySend extends AppCompatActivity {
         String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         return encodedImage;
     }
+
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_SELECT_CODE);
+    }
+
 }

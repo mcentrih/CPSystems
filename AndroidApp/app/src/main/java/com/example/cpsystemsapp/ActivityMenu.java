@@ -79,7 +79,8 @@ public class ActivityMenu extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentCamera()).commit();
                 break;
             case R.id.nav_road:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentRoad()).commit();
+                Intent roadIntent = new Intent(getBaseContext(), ActivityRoad.class);
+                startActivity(roadIntent);
                 break;
             case R.id.nav_car:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FragmentCar()).commit();

@@ -28,4 +28,17 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="send">Send</string>
+    <string name="road_conditions">Road conditions...</string>
+
+    <string-array name="road_array">
+        <item>Select road event...</item>
+        <item>Road work</item>
+        <item>Construction site</item>
+        <item>Colision</item>
+        <item>Hole</item>
+        <item>Icy road</item>
+        <item>Police</item>
+        <item>Radar</item>
+        <item>Danger</item>
+    </string-array>
 </resources>
