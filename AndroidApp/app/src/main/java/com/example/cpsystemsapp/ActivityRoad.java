@@ -6,16 +6,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -31,17 +34,31 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+
+
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ActivityRoad extends AppCompatActivity implements SensorEventListener {
     public static final String UPLOAD_ROAD_URL = "http://192.168.1.11/CPSystems/podatkovnaBaza/uploadRoad.php";
@@ -53,6 +70,7 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
     public static final String UPLOAD_KEY_Y = "yAxis";
     public static final String UPLOAD_KEY_Z = "zAxis";
     private static final int IMAGE_SELECT_CODE = 5000;
+    private static final int PERMISSION_ALL = 123;
     FusedLocationProviderClient fusedLocationProviderClient;
     Uri filePath;
     private Bitmap bitmap;
@@ -67,6 +85,23 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
     private final float NOISE = (float) 2.0;
     String bump = "CPSystemApp detected BUMP!";
 
+    private MapView map;
+    protected LocationManager locationManager;
+    GeoPoint startPoint, eventPoint;
+    IMapController mapController;
+    Marker marker;
+    private Polyline polyline;
+    private ArrayList<GeoPoint> pathPoints;
+    private Location lok;
+
+    String[] PERMISSIONS = {
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.INTERNET,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.ACCESS_NETWORK_STATE,
+            android.Manifest.permission.CAMERA
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +114,7 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
         ImageButton buttonSendRoad = findViewById(R.id.buttonSendRoad);
         ImageButton buttonImageRoad = findViewById(R.id.buttonImageRoad);
         EditText etDescription = findViewById(R.id.etDescription);
+        map = (MapView) findViewById(R.id.map);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         initialized = false;
@@ -86,6 +122,11 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener((SensorEventListener) this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setMultiTouchControls(true);
+        polyline = new Polyline();
+        pathPoints = new ArrayList<GeoPoint>();
+        map.getOverlays().add(polyline);
 
         buttonBackRoad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +160,7 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
         if (requestCode == IMAGE_SELECT_CODE && resultCode == ActivityMenu.RESULT_OK && data != null && data.getData() != null) {
 
             filePath = data.getData();
+            Log.i("Path: ", ""+filePath);
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filePath);
                 //imageView.setImageBitmap(bitmap);
@@ -137,6 +179,104 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+    }
+
+    protected void onStart() {
+        super.onStart();
+        if (!hasPermissions(this,PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        } else {
+            initMapStartGPS();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case PERMISSION_ALL: {
+                if (grantResults.length >= PERMISSIONS.length) {
+                    for (int i=0; i<PERMISSIONS.length; i++) {
+                        if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(this,"Enable permissions!", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }
+                    initMapStartGPS();
+                }
+                else
+                    finish();
+            }
+
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private Marker getPositionMarker() { //Singelton
+        if (marker==null) {
+            marker = new Marker(map);
+            marker.setTitle("Bump detected");
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            marker.setIcon(getResources().getDrawable(R.drawable.ic_baseline_warning_24));
+            map.getOverlays().add(marker);
+        }
+        return marker;
+    }
+
+    @SuppressLint("MissingPermission")
+    public void initMapStartGPS() {
+        mapController = map.getController();
+        mapController.setZoom(18.5);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
+        fusedLocationProviderClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            startPoint = new GeoPoint(location.getLatitude(),location.getLongitude());
+                            eventPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
+                            mapController.setCenter(startPoint);
+                        }
+                    }
+                });
+        map.invalidate();
+    }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+
+            if(true) {
+                DecimalFormat df2 = new DecimalFormat("#.##");
+                IMapController mapController = map.getController();
+                mapController.setZoom(18.5);
+                GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude()); //Postavi GPS lokacijo
+                eventPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
+                mapController.setCenter(startPoint);
+                pathPoints.add(startPoint);
+                int redColor = Color.parseColor("#ff0000");
+                polyline.setColor(redColor);
+                polyline.setWidth(15);
+                polyline.setPoints(pathPoints);
+                mapController.setCenter(startPoint);
+                map.invalidate();
+            }
+
+        }
+    };
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void onSensorChanged(SensorEvent event) {
@@ -170,6 +310,7 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
             twZAxis.setText(Float.toString(deltaZ));
 
             if (deltaY > 5.0) {
+                getPositionMarker().setPosition(eventPoint);
                 //Toast.makeText(this, "BUMP", Toast.LENGTH_SHORT).show();
                 class UploadRoadData extends AsyncTask<Bitmap, Void, String> {
 
@@ -307,7 +448,7 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
 
             @Override
             protected String doInBackground(Bitmap... params) {
-
+                getPositionMarker().setPosition(eventPoint);
 
                 Bitmap bitmap = params[0];
                 String uploadImage = getStringImage(bitmap);
