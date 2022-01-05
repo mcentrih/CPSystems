@@ -1,4 +1,4 @@
-#!C:\Python\Python39\python.exe
+#!C:\Python39\python.exe
 #print("Content-type: text/html\n\n")
 
 import sys
@@ -17,6 +17,8 @@ import pytesseract
 
 #filetypes = [("Slikovne datoteke", ".jpg .png .jpeg .jpe .tif .gif .jfif")]
 #filepath = filedialog.askopenfilename(title="Odpri sliko", filetypes=filetypes)
+##path = "C:/xampp/htdocs/CPSystems/RAIN/slika.jpg"
+##img = cv2.imread(path)
 img = cv2.imread(sys.argv[1])
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #cv2.imshow("siva", gray)
