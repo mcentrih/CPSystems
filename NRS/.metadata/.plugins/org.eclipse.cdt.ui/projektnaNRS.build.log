@@ -1,0 +1,79 @@
+10:38:00 **** Incremental Build of configuration Debug for project projektnaNRS ****
+make -j12 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F303xC -c -I../Core/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc -I../Drivers/STM32F3xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F3xx/Include -I../Drivers/CMSIS/Include -I../USB_DEVICE/App -I../USB_DEVICE/Target -I../Middlewares/ST/STM32_USB_Device_Library/Core/Inc -I../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:262:19: warning: implicit declaration of function 'sqrt' [-Wimplicit-function-declaration]
+  262 |    currentAccel = sqrt(pow(cordX, 2) + pow(cordY, 2) + pow(cordZ, 2));
+      |                   ^~~~
+../Core/Src/main.c:262:19: warning: incompatible implicit declaration of built-in function 'sqrt'
+../Core/Src/main.c:22:1: note: include '<math.h>' or provide a declaration of 'sqrt'
+   21 | #include "usb_device.h"
+  +++ |+#include <math.h>
+   22 | 
+../Core/Src/main.c:262:24: warning: implicit declaration of function 'pow' [-Wimplicit-function-declaration]
+  262 |    currentAccel = sqrt(pow(cordX, 2) + pow(cordY, 2) + pow(cordZ, 2));
+      |                        ^~~
+../Core/Src/main.c:262:24: warning: incompatible implicit declaration of built-in function 'pow'
+../Core/Src/main.c:262:24: note: include '<math.h>' or provide a declaration of 'pow'
+../Core/Src/main.c:281:22: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+  281 |    int len = sprintf(buff, "{Pospeskometer[%i]-> \"X\":[%.3f],  \"Y\":[%.3f], \"Z\":[%.3f]}\n\r", paket, cordX, cordY, cordZ);
+      |                      ^~~~
+      |                      |
+      |                      uint8_t * {aka unsigned char *}
+In file included from ../USB_DEVICE/Target/usbd_conf.h:30,
+                 from ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:29,
+                 from ../USB_DEVICE/App/usb_device.h:32,
+                 from ../Core/Src/main.c:21:
+c:\st\stm32cubeide_1.8.0\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.win32_2.0.0.202105311346\tools\arm-none-eabi\include\stdio.h:244:14: note: expected 'char * restrict' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  244 | int sprintf (char *__restrict, const char *__restrict, ...)
+      |              ^
+../Core/Src/main.c:282:4: warning: implicit declaration of function 'CDC_Transmit_FS' [-Wimplicit-function-declaration]
+  282 |    CDC_Transmit_FS((uint8_t*)&buff, len);
+      |    ^~~~~~~~~~~~~~~
+../Core/Src/main.c:289:23: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+  289 |     int len = sprintf(buff, "{\"Bumps X\":[%i],  \"Bumps Y\":[%i], \"Bumps Z\":[%i]}\n\r}", bumpsX, bumpsY, bumpsZ);
+      |                       ^~~~
+      |                       |
+      |                       uint8_t * {aka unsigned char *}
+In file included from ../USB_DEVICE/Target/usbd_conf.h:30,
+                 from ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:29,
+                 from ../USB_DEVICE/App/usb_device.h:32,
+                 from ../Core/Src/main.c:21:
+c:\st\stm32cubeide_1.8.0\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.win32_2.0.0.202105311346\tools\arm-none-eabi\include\stdio.h:244:14: note: expected 'char * restrict' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  244 | int sprintf (char *__restrict, const char *__restrict, ...)
+      |              ^
+../Core/Src/main.c:299:23: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
+  299 |     int len = sprintf(buff, "{STOP}\n\r");
+      |                       ^~~~
+      |                       |
+      |                       uint8_t * {aka unsigned char *}
+In file included from ../USB_DEVICE/Target/usbd_conf.h:30,
+                 from ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:29,
+                 from ../USB_DEVICE/App/usb_device.h:32,
+                 from ../Core/Src/main.c:21:
+c:\st\stm32cubeide_1.8.0\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.9-2020-q2-update.win32_2.0.0.202105311346\tools\arm-none-eabi\include\stdio.h:244:14: note: expected 'char * restrict' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  244 | int sprintf (char *__restrict, const char *__restrict, ...)
+      |              ^
+../Core/Src/main.c:195:7: warning: unused variable 'secondCounter' [-Wunused-variable]
+  195 |   int secondCounter = 0;
+      |       ^~~~~~~~~~~~~
+arm-none-eabi-gcc -o "projektnaNRS.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\FERI 3.letnik\NRS\projektnaNRS\projektnaNRS\STM32F303VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="projektnaNRS.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: projektnaNRS.elf
+ 
+arm-none-eabi-size   projektnaNRS.elf 
+arm-none-eabi-objdump -h -S  projektnaNRS.elf  > "projektnaNRS.list"
+arm-none-eabi-objcopy  -O ihex  projektnaNRS.elf  "projektnaNRS.hex"
+arm-none-eabi-objcopy  -O binary  projektnaNRS.elf  "projektnaNRS.bin"
+   text	   data	    bss	    dec	    hex	filename
+  58932	    856	   6368	  66156	  1026c	projektnaNRS.elf
+Finished building: default.size.stdout
+ 
+Finished building: projektnaNRS.hex
+Finished building: projektnaNRS.bin
+ 
+ 
+Finished building: projektnaNRS.list
+ 
+
+10:38:02 Build Finished. 0 errors, 9 warnings. (took 1s.536ms)
+
