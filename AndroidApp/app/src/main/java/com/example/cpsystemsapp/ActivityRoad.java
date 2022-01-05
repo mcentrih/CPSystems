@@ -61,7 +61,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ActivityRoad extends AppCompatActivity implements SensorEventListener {
+<<<<<<< Updated upstream
     public static final String UPLOAD_ROAD_URL = "http://164.8.218.88/CPSystems/podatkovnaBaza/uploadRoad.php";
+=======
+    public static final String UPLOAD_ROAD_URL = "http://192.168.1.10/CPSystems/podatkovnaBaza/uploadRoad.php";
+>>>>>>> Stashed changes
     public static final String UPLOAD_KEY_IMAGE = "image";
     public static final String UPLOAD_KEY_LATITUDE = "latitude";
     public static final String UPLOAD_KEY_LONGITUDE = "longitude";
