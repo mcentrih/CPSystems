@@ -1,0 +1,12 @@
+﻿  ATRUP_projekt.cpp
+D:\3.letnik FERI\1. semester\RV\ATRUP_projekt\ATRUP_projekt.cpp(91,24): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\3.letnik FERI\1. semester\RV\ATRUP_projekt\ATRUP_projekt.cpp(147,24): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\3.letnik FERI\1. semester\RV\ATRUP_projekt\ATRUP_projekt.cpp(256,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\3.letnik FERI\1. semester\RV\ATRUP_projekt\ATRUP_projekt.cpp(256,64): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\3.letnik FERI\1. semester\RV\ATRUP_projekt\ATRUP_projekt.cpp(256,93): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\3.letnik FERI\1. semester\RV\ATRUP_projekt\ATRUP_projekt.cpp(317,19): warning C4244: 'initializing': conversion from '_Rep' to 'int', possible loss of data
+          with
+          [
+              _Rep=__int64
+          ]
+  ATRUP_projekt.vcxproj -> D:\3.letnik FERI\1. semester\RV\ATRUP_projekt\x64\Debug\ATRUP_projekt.exe
