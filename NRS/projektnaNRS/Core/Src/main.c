@@ -314,7 +314,7 @@ int main(void)
 
 			if(once3 < 1){
 				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET);
-				HAL_Delay(5000);
+				HAL_Delay(2500);
 				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
 				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_SET);
 

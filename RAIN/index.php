@@ -16,8 +16,8 @@ if(array_key_exists('findT', $_POST)) {
 }
 function findTablica()
 {
-    #$command = escapeshellcmd('C:\xampp\htdocs\CPSystems\ORV\prepoznavaTabliceZan.py C:\xampp\htdocs\CPSystems\RAIN\slika.jpg');
-    $command = escapeshellcmd('C:\xampp\htdocs\CPSystems\ORV\prepoznavaTabliceMatjaz.py C:\xampp\htdocs\CPSystems\RAIN\slika.jpg');
+    $command = escapeshellcmd('C:\xampp\htdocs\CPSystems\ORV\prepoznavaTabliceZan.py C:\xampp\htdocs\CPSystems\RAIN\slika.jpg');
+    #$command = escapeshellcmd('C:\xampp\htdocs\CPSystems\ORV\prepoznavaTabliceMatjaz.py C:\xampp\htdocs\CPSystems\RAIN\slika.jpg');
     $output = shell_exec($command);
     echo $output;
 }
