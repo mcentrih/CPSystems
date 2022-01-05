@@ -188,6 +188,7 @@ int main(void)
   int bumpsX = 0;
   int bumpsY = 0;
   int bumpsZ = 0;
+  int bumps = 0;
   int counter = 0;
   int paket = -1;
   float currentAccel = 0.0;
@@ -196,6 +197,7 @@ int main(void)
   int axis = 0;
   int once = 0;
   int once2 = 0;
+  int once3 = 0;
 
   uint8_t buff[256];
 
@@ -208,18 +210,22 @@ int main(void)
 	  HAL_Delay(10);
 	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0)){
 		  counter++;
-		 if(counter > 3){
+		 if(counter > 4){
 			 counter = 0;
 			 once = 0;
 			 once2 = 0;
+			 once3 = 0;
+			 bumps = 0;
 			 bumpsX = 0;
 			 bumpsY = 0;
 			 bumpsZ = 0;
 			 paket = -1;
+			    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_RESET);
 			    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
 			    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
 			    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
 			    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
 		 }
 	  }
 
@@ -299,6 +305,27 @@ int main(void)
 				int len = sprintf(buff, "{STOP}\n\r");
 				CDC_Transmit_FS((uint8_t*)&buff, len);
 				once++;
+			}
+
+		}
+
+		else if(counter == 4){
+
+
+			if(once3 < 1){
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET);
+				HAL_Delay(5000);
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_SET);
+
+				bumps = bumpsX + bumpsY + bumpsZ;
+				for(int i = 0; i < 256; i++){
+					buff[i] = 0;
+				}
+				int len = sprintf(buff, "%i\n\r",bumps);
+
+				CDC_Transmit_FS((uint8_t*)&buff, len);
+				once3++;
 			}
 
 		}

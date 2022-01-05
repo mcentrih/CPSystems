@@ -10,7 +10,7 @@
     echo $image;
     
     //get FK_user
-    $sql = "INSERT INTO cesta VALUES (DEFAULT, '$image', '$latitude' , '$longitude', '$opis', '12')";
+    $sql = "INSERT INTO cesta VALUES (DEFAULT, '$image', '$latitude' , '$longitude', '$opis', '1')";
     if($con -> query($sql)){
         echo "Working!";
         return true;
