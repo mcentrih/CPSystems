@@ -61,11 +61,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ActivityRoad extends AppCompatActivity implements SensorEventListener {
-<<<<<<< Updated upstream
-    public static final String UPLOAD_ROAD_URL = "http://164.8.218.88/CPSystems/podatkovnaBaza/uploadRoad.php";
-=======
     public static final String UPLOAD_ROAD_URL = "http://192.168.1.10/CPSystems/podatkovnaBaza/uploadRoad.php";
->>>>>>> Stashed changes
     public static final String UPLOAD_KEY_IMAGE = "image";
     public static final String UPLOAD_KEY_LATITUDE = "latitude";
     public static final String UPLOAD_KEY_LONGITUDE = "longitude";
@@ -446,7 +442,7 @@ public class ActivityRoad extends AppCompatActivity implements SensorEventListen
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "Event uploaded!", Toast.LENGTH_LONG).show();
             }
 
