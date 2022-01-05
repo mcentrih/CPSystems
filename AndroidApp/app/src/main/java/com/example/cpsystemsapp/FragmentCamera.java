@@ -57,7 +57,7 @@ import java.util.Locale;
 import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 
 public class FragmentCamera extends Fragment {
-    public static final String UPLOAD_URL = "http://192.168.1.10/CPSystems/podatkovnaBaza/upload.php";
+    public static final String UPLOAD_URL = "http://164.8.218.88/CPSystems/podatkovnaBaza/upload.php";
     public static final String UPLOAD_KEY = "image";
     private View view;
     private Bitmap bitmap;

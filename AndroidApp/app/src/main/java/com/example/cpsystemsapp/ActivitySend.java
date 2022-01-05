@@ -39,7 +39,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ActivitySend extends AppCompatActivity {
-    public static final String UPLOAD_URL = "http://192.168.1.11/CPSystems/podatkovnaBaza/upload.php";
+    public static final String UPLOAD_URL = "http://164.8.218.88/CPSystems/podatkovnaBaza/upload.php";
     public static final String UPLOAD_KEY_IMAGE = "image";
     public static final String UPLOAD_KEY_LATITUDE = "latitude";
     public static final String UPLOAD_KEY_LONGITUDE = "longitude";
