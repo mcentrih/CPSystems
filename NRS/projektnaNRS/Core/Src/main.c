@@ -310,23 +310,16 @@ int main(void)
 		}
 
 		else if(counter == 4){
-
-
-			if(once3 < 1){
-				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET);
-				HAL_Delay(5000);
-				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_SET);
-
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_SET);
+			//if(once3 < 1){
 				bumps = bumpsX + bumpsY + bumpsZ;
 				for(int i = 0; i < 256; i++){
 					buff[i] = 0;
 				}
 				int len = sprintf(buff, "%i\n\r",bumps);
-
 				CDC_Transmit_FS((uint8_t*)&buff, len);
 				once3++;
-			}
+			//}
 
 		}
 

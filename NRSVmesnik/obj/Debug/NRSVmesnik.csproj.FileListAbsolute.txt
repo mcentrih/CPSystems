@@ -1,0 +1,7 @@
+C:\xampp\htdocs\CPSystems\NRSVmesnik\bin\Debug\NRSVmesnik.exe.config
+C:\xampp\htdocs\CPSystems\NRSVmesnik\bin\Debug\NRSVmesnik.exe
+C:\xampp\htdocs\CPSystems\NRSVmesnik\bin\Debug\NRSVmesnik.pdb
+C:\xampp\htdocs\CPSystems\NRSVmesnik\obj\Debug\NRSVmesnik.csproj.AssemblyReference.cache
+C:\xampp\htdocs\CPSystems\NRSVmesnik\obj\Debug\NRSVmesnik.csproj.CoreCompileInputs.cache
+C:\xampp\htdocs\CPSystems\NRSVmesnik\obj\Debug\NRSVmesnik.exe
+C:\xampp\htdocs\CPSystems\NRSVmesnik\obj\Debug\NRSVmesnik.pdb

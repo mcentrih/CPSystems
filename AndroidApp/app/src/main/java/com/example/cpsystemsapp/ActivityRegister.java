@@ -16,7 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityRegister extends AppCompatActivity {
+<<<<<<< Updated upstream
+    String URLRegister = "http://164.8.218.88/CPSystems/podatkovnaBaza/signup.php";
+=======
     String URLRegister = "http://192.168.1.10/CPSystems/podatkovnaBaza/signup.php";
+>>>>>>> Stashed changes
 
     TextView alreadyRegistered;
     Button btn_register;
