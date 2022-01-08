@@ -23,7 +23,7 @@ namespace NRSVmesnik
 
                     using (FileStream fs = File.Create(fileName))
                     {
-                        Byte[] byteJson = new UTF8Encoding(true).GetBytes("[" + json + "]");
+                        Byte[] byteJson = new UTF8Encoding(true).GetBytes("{\"podatki\": [" + json + "]}");
                         fs.Write(byteJson, 0, byteJson.Length);
                     }
                 }
@@ -33,12 +33,12 @@ namespace NRSVmesnik
                     using (StreamReader streamReader = File.OpenText(fileName))
                     {
                         text = streamReader.ReadToEnd();
-                        Console.WriteLine(text + "," + json + "]");
+                        Console.WriteLine(text + "," + json + "]}");
                     }
-                    text = text.Remove(text.Length - 1);
+                    text = text.Remove(text.Length - 2);
                     using (FileStream fs = File.Create(fileName))
                     {
-                        Byte[] byteJson = new UTF8Encoding(true).GetBytes(text + "," + json + "]");
+                        Byte[] byteJson = new UTF8Encoding(true).GetBytes(text + "," + json + "]}");
                         fs.Write(byteJson, 0, byteJson.Length);
                     }
                 }
@@ -84,10 +84,19 @@ namespace NRSVmesnik
                 pravi = Console.ReadLine();
                 if (pravi.ToLower().Equals("y"))
                 {
-                    Console.WriteLine("Vpišite ime poti: ");
+                    Console.WriteLine("Seznam relacij:");
+                    Console.WriteLine("1 -> Celje - Štore");
+                    Console.WriteLine("2 -> Celje - Šentjur");
+                    Console.WriteLine("3 -> Celje - Laško");
+                    Console.WriteLine("4 -> Celje - Žalec");
+                    Console.WriteLine("5 -> Celje - Maribor");
+                    Console.WriteLine("6 -> Celje - Ljubljana");
+
+                    Console.WriteLine("Vpišite šifro poti: ");
                     name = Console.ReadLine();
-                    string json = "{\"name\":\"" + name + "\"," +
-                                  "\"bumps\":\"" + Convert.ToInt32(st) + "\"}";
+                   // st = "1";
+                    string json = "{\"idRelacija\":\"" + name + "\"," +
+                                  "\"bumps\":" + Convert.ToInt32(st) + "}";
 
                     Console.Write("Ustvarimo nov dokument ali dodamo podatke?(y/n) ");
                     novo = Console.ReadLine();
