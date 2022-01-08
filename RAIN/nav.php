@@ -14,10 +14,13 @@
                     <a class="nav-link" href="getTablica.php">Tablice</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="povezave.php">Povezave</a>
+                    <a class="nav-link" href="cesta.php">Cesta</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cesta.php">Cesta</a>
+                    <a class="nav-link" href="skrivanjePodatkov.php">Skrivanje</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="povezave.php">Povezave</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -39,7 +42,7 @@
                     <?php
                 } else {
                     ?>
-                    <li class="" style="padding-left: 190%">
+                    <li class="" style="padding-left: 150%">
                         <a role="button" class="btn btn-primary" href="login.php">Prijava</a>
                     </li>
                     <li class="" style="padding-left: 10%">

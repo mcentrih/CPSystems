@@ -43,7 +43,7 @@ if (isset($_SESSION["USER_ID"])) {
         <img class="rounded" style="display: block; margin-left: auto; margin-right: auto;padding-top: 5px;"
              src="icon.png" width="128"
              height="128">
-        <h1 style="text-align: center">Projekt prepoznava tablic in cestišča</h1>
+        <h1 style="text-align: center">Projekt prepoznava tablic in cestišča (2. letnik),<br>steganografija, paralelno in porazdeljeno obdelovanje podatkov, grafika in mikrokrmilniki (3. letnik)</h1>
         <div style="display: inline-block; padding-left: 45%">
             <p>Pozdravljeni, <strong><?php echo $_SESSION["fullname"] ?></strong></p>
         </div>
@@ -54,7 +54,7 @@ if (isset($_SESSION["USER_ID"])) {
     <div style="background-color: #21364c; margin-top: 56px; margin-bottom: 20px; padding-top: 20px; padding-bottom: 20px; border-bottom: 5px solid black;">
         <img style="display: block; margin-left: auto; margin-right: auto;padding-top: 5px;" src="icon.png" width="128"
              height="128">
-        <h1 style="text-align: center">Projekt prepoznava tablic in cestišča</h1>
+        <h1 style="text-align: center">Projekt prepoznava tablic in cestišča (2. letnik),<br>steganografija, paralelno in porazdeljeno obdelovanje podatkov, grafika in mikrokrmilniki (3. letnik)</h1>
     </div>
     <?php
 }
