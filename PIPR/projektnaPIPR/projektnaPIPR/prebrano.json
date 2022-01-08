@@ -1,0 +1,52 @@
+{
+  "podatki": [
+    {
+      "idRelacija": "1",
+      "bumps": 10
+    },
+    {
+      "idRelacija": "2",
+      "bumps": 20
+    },
+    {
+      "idRelacija": "3",
+      "bumps": 30
+    },
+    {
+      "idRelacija": "4",
+      "bumps": 40
+    },
+    {
+      "idRelacija": "5",
+      "bumps": 50
+    },
+    {
+      "idRelacija": "6",
+      "bumps": 60
+    },
+    {
+      "idRelacija": "1",
+      "bumps": 10
+    },
+    {
+      "idRelacija": "2",
+      "bumps": 20
+    },
+    {
+      "idRelacija": "3",
+      "bumps": 30
+    },
+    {
+      "idRelacija": "4",
+      "bumps": 40
+    },
+    {
+      "idRelacija": "5",
+      "bumps": 50
+    },
+    {
+      "idRelacija": "6",
+      "bumps": 60
+    }
+  ]
+}

@@ -1,31 +1,52 @@
-[
-  {
-    "name": "test1",
-    "bumps": "1"
-  },
-  {
-    "name": "test2",
-    "bumps": "2"
-  },
-  {
-    "name": "test3",
-    "bumps": "3"
-  },
-  {
-    "name": "test4",
-    "bumps": "4"
-  },
-  {
-    "name": "test5",
-    "bumps": "5"
-  },
-  {
-    "name": "test6",
-    "bumps": "6"
-  },
-  {
-    "name": "test7",
-    "bumps": "7"
-  }
-
-]
+{
+  "podatki": [
+    {
+      "idRelacija": "1",
+      "bumps": 10
+    },
+    {
+      "idRelacija": "2",
+      "bumps": 20
+    },
+    {
+      "idRelacija": "3",
+      "bumps": 30
+    },
+    {
+      "idRelacija": "4",
+      "bumps": 40
+    },
+    {
+      "idRelacija": "5",
+      "bumps": 50
+    },
+    {
+      "idRelacija": "6",
+      "bumps": 60
+    },
+    {
+      "idRelacija": "1",
+      "bumps": 10
+    },
+    {
+      "idRelacija": "2",
+      "bumps": 20
+    },
+    {
+      "idRelacija": "3",
+      "bumps": 30
+    },
+    {
+      "idRelacija": "4",
+      "bumps": 40
+    },
+    {
+      "idRelacija": "5",
+      "bumps": 50
+    },
+    {
+      "idRelacija": "6",
+      "bumps": 60
+    }
+  ]
+}
