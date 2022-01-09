@@ -1,5 +1,5 @@
 ﻿  projektnaPIPR.cpp
 C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\projektnaPIPR\projektnaPIPR.cpp(27,21): warning C4018: '<': signed/unsigned mismatch
 C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\projektnaPIPR\projektnaPIPR.cpp(47,21): warning C4018: '<': signed/unsigned mismatch
-C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\projektnaPIPR\projektnaPIPR.cpp(157,21): warning C4018: '<': signed/unsigned mismatch
+C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\projektnaPIPR\projektnaPIPR.cpp(165,21): warning C4018: '<': signed/unsigned mismatch
   projektnaPIPR.vcxproj -> C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\Debug\projektnaPIPR.exe

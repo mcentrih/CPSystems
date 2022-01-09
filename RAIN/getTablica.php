@@ -42,7 +42,7 @@ include("showMap.php");
     echo "<br>";
     echo "</div>";
     ?>
-    <div style="height:400px; width: 400px; display: inline-block; float: right;">
+    <div style="height:400px; width: 600px; display: inline-block; float: right;">
         <?php
         include("primaryBtns.php");
         echo "</div>";

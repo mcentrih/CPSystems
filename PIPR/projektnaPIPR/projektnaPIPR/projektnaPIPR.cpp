@@ -154,8 +154,16 @@ int main(int argc, char *argv[]) {
 		done.insert(done.end(), result1.begin(), result1.end());
 		done.insert(done.end(), result2.begin(), result2.end());
 
+		cout << endl << " <br> Seznam relacij: <br>" << endl;
+		cout << "1 -> Celje - Store <br>" << endl;
+		cout << "2 -> Celje - Sentjur <br>" << endl;
+		cout << "3 -> Celje - Lasko <br>" << endl;
+		cout << "4 -> Celje - Zalec <br>" << endl;
+		cout << "5 -> Celje - Maribor <br>" << endl;
+		cout << "6 -> Celje - Ljubljana <br>" << endl;
+
 		for (int i = 0; i < done.size(); i++) {
-			cout << "Povprecje destinacije " << i + 1 << "-> " << done[i] << endl;
+			cout << "Povprecje destinacije " << i + 1 << "-> " << done[i] << "<br>" << endl;
 		}
 	}
 	MPI_Finalize();

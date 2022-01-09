@@ -15,9 +15,7 @@ if(array_key_exists('skrijPodatke', $_POST)) {
     skrijPodatke();
 }
 
-if(array_key_exists('najdiPodatke', $_POST)) {
-    najdiPodatke();
-}
+
 
 function skrijPodatke()
 {
@@ -28,14 +26,7 @@ function skrijPodatke()
     #echo $output;
 }
 
-function najdiPodatke()
-{
-    $command = escapeshellcmd('py C:\xampp\htdocs\CPSystems\RV\najdiBesedilo.py');
-    shell_exec($command);
-    echo "<br>";
-    echo file_get_contents("C:\\xampp\\htdocs\\CPSystems\\RV\\odkodiraniPodatki.txt");
-    echo "<br>";
-}
+
 
 function shraniSlikoNaPC()
 {
@@ -72,8 +63,23 @@ function shraniPodatkeNaPC()
 ?>
 
 <div style="height:400px; width: 800px; display: inline-block; padding-left:15px;">
+    <?php 
+            if(array_key_exists('najdiPodatke', $_POST)) {
+                najdiPodatke();
+            }
+
+            function najdiPodatke()
+            {
+                $command = escapeshellcmd('py C:\xampp\htdocs\CPSystems\RV\najdiBesedilo.py');
+                shell_exec($command);
+                echo "<br>";
+                echo file_get_contents("C:\\xampp\\htdocs\\CPSystems\\RV\\odkodiraniPodatki.txt");
+                echo "<br>";
+            }
+    ?>
     <img src="../RV/cistaSlika.png" alt='slika' width='600px' height='300px'>
-    <p><object width="800" data="../RV/podatki.txt"></object></p>
+    <p><object width="800" height="200" data="../RV/podatki.txt"></object></p>
+    
 </div>
     
 <div style="height:400px; width: 1000px; display: inline-block; float: right;">

@@ -20,6 +20,9 @@
                     <a class="nav-link" href="skrivanjePodatkov.php">Skrivanje</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="paralelnoRacunanje.php">Paralelno</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="povezave.php">Povezave</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -36,13 +39,13 @@
                 <?php
                 if (isset($_SESSION["USER_ID"])) {
                     ?>
-                    <li class="" style="padding-left: 260%">
+                    <li class="" style="padding-left: 160%">
                         <a role="button" class="btn btn-danger" href="logout.php">Odjava</a>
                     </li>
                     <?php
                 } else {
                     ?>
-                    <li class="" style="padding-left: 150%">
+                    <li class="" style="padding-left: 120%">
                         <a role="button" class="btn btn-primary" href="login.php">Prijava</a>
                     </li>
                     <li class="" style="padding-left: 10%">
