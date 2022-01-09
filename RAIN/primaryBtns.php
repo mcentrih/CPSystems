@@ -11,3 +11,4 @@
 </form>
 <a role="button" class="btn btn-primary" href="saveTablica.php">Shrani tablico</a>
 <a role="button" class="btn btn-primary" href="getTablica.php">Prikaži vse</a>
+<a role="button" class="btn btn-primary" href="paralelnoRacunanje.php">Paralelno</a>

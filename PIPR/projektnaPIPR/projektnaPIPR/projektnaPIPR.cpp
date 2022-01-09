@@ -113,9 +113,10 @@ int countLinesInFile(string file) {
 	return lineCounter;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
 	MPI_Init(NULL, NULL);
-	string jsonFile = "prebrano.json";
+
+	string jsonFile = argv[1];
 	int firstHalf = 0;
 	int secondHalf = 0;
 	vector<int> done;

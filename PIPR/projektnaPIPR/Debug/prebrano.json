@@ -47,6 +47,30 @@
     {
       "idRelacija": "6",
       "bumps": 60
+    },
+    {
+      "idRelacija": "1",
+      "bumps": 150
+    },
+    {
+      "idRelacija": "2",
+      "bumps": 140
+    },
+    {
+      "idRelacija": "3",
+      "bumps": 130
+    },
+    {
+      "idRelacija": "4",
+      "bumps": 120
+    },
+    {
+      "idRelacija": "5",
+      "bumps": 110
+    },
+    {
+      "idRelacija": "6",
+      "bumps": 100
     }
   ]
 }
