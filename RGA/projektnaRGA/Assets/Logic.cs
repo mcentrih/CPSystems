@@ -1,86 +1,64 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class Logic : MonoBehaviour
 {
-    public List<GameObject> gameObjectsRandomPos;
-    public List<GameObject> gameObjectsFinalPos;
-    public List<GameObject> objectsToSpawn;
+    public GameObject tablicaGO;
+    public List<GameObject> abeceda;
 
-    private List<GameObject> onSceneObjs;
+    public List<GameObject> charLoc;
 
-    private int pos = 0;
+    string tablica = "";
 
-    bool foundEveryObject = false;
-
-    // Start is called before the first frame update
     void Start()
     {
-        onSceneObjs = new List<GameObject>();
-
-        List<int> indexes = GenerateRandomList();
-        for (int i = 0; i < objectsToSpawn.Count; i++)
-        {
-            onSceneObjs.Add(Instantiate(objectsToSpawn[i], gameObjectsRandomPos[indexes[i]].transform.position, objectsToSpawn[i].transform.rotation));
-        }
+        GetTablicaData();
     }
 
     private void Update()
     {
-        if (!foundEveryObject)
+        // iskanje objektov
+        if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
-            // iskanje objektov
-            if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+            Ray ray = Camera.current.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
             {
-                Ray ray = Camera.current.ScreenPointToRay(Input.GetTouch(0).position);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
+                // Debug.Log("Found: " + hit.collider.name + "\nCompare to: " + objectsToSpawn[pos].transform.name);
+                if (hit.collider.name == tablicaGO.transform.name)
                 {
-                    Debug.Log("Found: " + hit.collider.name + "\nCompare to: " + objectsToSpawn[pos].transform.name);
-                    if (hit.collider.name == onSceneObjs[pos].transform.name)
+                    GetTablicaData();
+                    tablica = tablica.ToLower();
+                    for (int i = 0; i < tablica.Length; i++)
                     {
-                        onSceneObjs[pos].transform.position = gameObjectsFinalPos[pos].transform.position;
-                       // onSceneObjs[pos].transform.rotation = gameObjectsFinalPos[pos].transform.rotation;
-
-                        pos++;
-
-                        if (pos > 5) foundEveryObject = true;
-                    }
-                    else
-                    {
-                        ResetScene();
+                        int pos = (int)tablica[i] - 97;
+                        if (pos == 21 || pos == 22 || pos == 23) continue;
+                        Debug.Log($"POS: {pos}; char: {tablica[i]}");
+                        Quaternion quaternion = transform.rotation;
+                        quaternion.y -= 180;
+                        Instantiate(abeceda[pos], charLoc[i].transform.position, quaternion);
                     }
                 }
             }
         }
+
     }
 
-    private void ResetScene()
+    protected string tablicaDataURL = "http://192.168.1.26/CPSystems/RAIN/getDataTablica.php";
+
+    public void GetTablicaData()
     {
-        List<int> indexes = GenerateRandomList();
-
-        for (int i = 0; i < 6; i++)
-        {
-            onSceneObjs[i].transform.position = gameObjectsRandomPos[indexes[i]].transform.position;
-        }
-
-        pos = 0;
+        _ = StartCoroutine(GetTablica());
     }
 
-    public List<int> GenerateRandomList()
+    IEnumerator GetTablica()
     {
-        List<int> list = new List<int>();
-        for (int i = 0; i < 6; i++)
-        {
-            int numToAdd = Random.Range(0, 6);
-            while (list.Contains(numToAdd))
-            {
-                numToAdd = Random.Range(0, 6);
-            }
-            list.Add(numToAdd);
-        }
+        UnityWebRequest www = UnityWebRequest.Get(tablicaDataURL);
+        yield return www.SendWebRequest();
+        tablica = www.downloadHandler.text;
 
-        return list;
+        Debug.Log(tablica);
     }
 }
