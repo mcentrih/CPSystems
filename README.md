@@ -36,5 +36,8 @@ pip install pytesseract
 -[RV]()
 >Steganografija, skrivanje podatkov v sliko
 
+-[RGA]()
+>Prikaz zadnje tablice na sistemu
+
 ## Avtorja
 Žan Plahuta in Matjaž Centrih
