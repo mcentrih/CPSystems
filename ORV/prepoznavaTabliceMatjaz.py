@@ -57,10 +57,14 @@ pytesseract.pytesseract.tesseract_cmd = "C:/Program Files/Tesseract-OCR/tesserac
 text = pytesseract.image_to_string(cropped_image)
 a = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 filterd = list(filter(lambda x : x in a,text))
+tablicaTxtString = "".join(filterd)
+with open('C:\\xampp\\htdocs\\CPSystems\\RAIN\\tablica_text.txt', 'w') as f:
+    f.write(tablicaTxtString)
 print(filterd)
 print('<br>')
 img_tag = '<img src="tablica.jpg">'
 print(img_tag)
+
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 res = cv2.putText(img, text=text, org=(approx[0][0][0], approx[1][0][1]+60), fontFace=font, fontScale=1, color=(0,255,0), thickness=2, lineType=cv2.LINE_AA)

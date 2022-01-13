@@ -36,12 +36,16 @@ $data = base64_encode($img);
 echo "tu";
 echo "  ";
 
+$myfile = fopen("tablica_text.txt", "r") or die("Unable to open file!");
+$tablicaTxt = fread($myfile,filesize("tablica_text.txt"));
+fclose($myfile);
+
 // Upload file
 if (rename($name . $end, $target_file)) {
     // Insert record
 //    $query = "insert into tablice(id, name, tablica/*, lat, lng, FK_user*/) values('".$id."','" . $tar . "','" . $data . "')";
 //    ,'" . $lat . "','" . $lon . "','" . $_SESSION["USER_ID"] . "')";
-    $query = "UPDATE tablice SET name = '" . $tar . "', tablica = '" . $data . "' WHERE id = '" . $id . "'";
+    $query = "UPDATE tablice SET name = '" . $tar . "', tablica = '" . $data . "', tablica_txt = '" . $tablicaTxt . "' WHERE id = '" . $id . "'";
     if ($conn->query($query)) {
         echo "dela";
         echo "  ";

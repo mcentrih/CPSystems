@@ -66,6 +66,8 @@ print(filterd)
 print('<br>')
 img_tag = '<img src="tablica.jpg">'
 print(img_tag)
+with open('C:\\xampp\\htdocs\\CPSystems\\RAIN\\tablica_text.txt', 'w') as f:
+        f.write(filterd)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 res = cv2.putText(img, text=text, org=(approx[0][0][0], approx[1][0][1]+60), fontFace=font, fontScale=1, color=(0,255,0), thickness=2, lineType=cv2.LINE_AA)
