@@ -24,6 +24,7 @@ include("nav.php");
             function mpiStart()
             {
                 $command = escapeshellcmd('mpiexec -n 3 C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\Debug\projektnaPIPR.exe C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\Debug\prebrano.json');
+              //  $command = escapeshellcmd('mpiexec -hosts 3 192.168.1.26 192.168.1.31 192.168.1.31 C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\Debug\projektnaPIPR.exe C:\xampp\htdocs\CPSystems\PIPR\projektnaPIPR\Debug\prebrano.json');
                 $output = shell_exec($command);
                 echo $output;
             }
