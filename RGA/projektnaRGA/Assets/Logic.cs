@@ -19,14 +19,12 @@ public class Logic : MonoBehaviour
 
     private void Update()
     {
-        // iskanje objektov
         if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
         {
             Ray ray = Camera.current.ScreenPointToRay(Input.GetTouch(0).position);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                // Debug.Log("Found: " + hit.collider.name + "\nCompare to: " + objectsToSpawn[pos].transform.name);
                 if (hit.collider.name == tablicaGO.transform.name)
                 {
                     GetTablicaData();
@@ -34,6 +32,11 @@ public class Logic : MonoBehaviour
                     for (int i = 0; i < tablica.Length; i++)
                     {
                         int pos = (int)tablica[i] - 97;
+                        if (pos < 0)
+                        {
+                            pos += 48;
+                            pos += 27;
+                        }
                         if (pos == 21 || pos == 22 || pos == 23) continue;
                         Debug.Log($"POS: {pos}; char: {tablica[i]}");
                         Quaternion quaternion = transform.rotation;
